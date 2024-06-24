@@ -19,6 +19,12 @@ async function init() {
         letters[currentGuess.length - 1].innerText = letter;
     }
 
+    async function commit() {
+        if(currentGuess.length === ANSWER_LENGTH) {
+            return;
+        }
+    }
+
     document.addEventListener('keydown', async (e) => {
         const action = e.key.toLowerCase();
         
