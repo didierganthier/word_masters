@@ -3,10 +3,8 @@ const loadingDiv = document.querySelector('.info-bar');
 const ANSWER_LENGTH = 5;
 
 async function init() {
-    const currentGuess = '';
-
-    const string = 'BRIAN';
-    
+    let currentGuess = '';
+    let currentRow = 0;
 
 
     function addLetter(letter) {
@@ -16,13 +14,16 @@ async function init() {
             currentGuess = currentGuess.substring(0 , currentGuess.length - 1) + letter;
         }
 
-        letters[currentGuess.length - 1].innerText = letter;
+        letters[ANSWER_LENGTH * currentRow + currentGuess.length - 1].innerText = letter;
     }
 
     async function commit() {
-        if(currentGuess.length === ANSWER_LENGTH) {
+        if(currentGuess.length !== ANSWER_LENGTH) {
             return;
         }
+
+        currentRow++;
+        currentGuess = '';
     }
 
     document.addEventListener('keydown', async (e) => {
