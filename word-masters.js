@@ -26,6 +26,15 @@ async function init() {
         currentGuess = '';
     }
 
+    function backspace() {
+        if(currentGuess.length === 0) {
+            return;
+        }
+
+        currentGuess = currentGuess.substring(0, currentGuess.length - 1);
+        letters[ANSWER_LENGTH * currentRow + currentGuess.length].innerText = '';
+    }
+
     document.addEventListener('keydown', async (e) => {
         const action = e.key.toLowerCase();
         
@@ -33,7 +42,7 @@ async function init() {
 
         if (action === 'enter') {
             commit();
-        } else if (action === 'backspace') {
+        } else if (action === 'delete' || action === 'backspace') {
             backspace();
         } else if (isLetter(action)) {
             addLetter(action);
