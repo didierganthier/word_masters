@@ -29,6 +29,8 @@ async function init() {
             return;
         }
 
+        const guessParts = currentGuess.split('');
+
         currentRow++;
         currentGuess = '';
     }
