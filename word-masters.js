@@ -11,6 +11,7 @@ async function init() {
     const resObj = await res.json();
     const word = resObj.word.toUpperCase();
     const wordParts = word.split('');
+    console.log(word);
     setLoading(false)
 
 
@@ -32,15 +33,19 @@ async function init() {
         const guessParts = currentGuess.split('');
 
         for(let i = 0; i < ANSWER_LENGTH; i++) {
-            if(guessParts[i] === wordParts[i]) {
+            if(guessParts[i].toUpperCase() === wordParts[i]) {
+                console.log('correct');
                 letters[currentRow * ANSWER_LENGTH + i].classList.add('correct');
             } 
         }
 
         for(let i = 0; i < ANSWER_LENGTH; i++) {
-            if(wordParts.includes(guessParts[i])) {
+            if(guessParts[i].toUpperCase() === wordParts[i]) {
+                // return;
+            } else if(wordParts.includes(guessParts[i].toUpperCase())) {
                 letters[currentRow * ANSWER_LENGTH + i].classList.add('close');
             } else {
+
                 letters[currentRow * ANSWER_LENGTH + i].classList.add('wrong');
             }
         }
@@ -61,7 +66,6 @@ async function init() {
     document.addEventListener('keydown', async (e) => {
         const action = e.key.toLowerCase();
         
-        console.log(action);
 
         if (action === 'enter') {
             commit();
