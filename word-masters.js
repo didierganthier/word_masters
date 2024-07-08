@@ -87,4 +87,16 @@ function setLoading(isLoading) {
     loadingDiv.classList.toggle('hidden', !isLoading);
 }
 
+function makeMap(array) {
+    const obj = {};
+    for(let i = 0; i < array.length; i++) {
+        const letter = array[i].toUpperCase();
+        if(obj[letter]) {
+            obj[letter]++;
+        } else {
+            obj[letter] = 1;
+        }
+    }
+}
+
 init();
