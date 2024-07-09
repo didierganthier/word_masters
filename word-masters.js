@@ -31,18 +31,20 @@ async function init() {
         }
 
         const guessParts = currentGuess.split('');
+        const map = makeMap(guessParts);
 
         for(let i = 0; i < ANSWER_LENGTH; i++) {
             if(guessParts[i].toUpperCase() === wordParts[i]) {
                 console.log('correct');
                 letters[currentRow * ANSWER_LENGTH + i].classList.add('correct');
+                map[guessParts[i]]--;
             } 
         }
 
         for(let i = 0; i < ANSWER_LENGTH; i++) {
             if(guessParts[i].toUpperCase() === wordParts[i]) {
                 // return;
-            } else if(wordParts.includes(guessParts[i].toUpperCase())) {
+            } else if(wordParts.includes(guessParts[i].toUpperCase()) && map[guessParts[i]] > 0) {
                 letters[currentRow * ANSWER_LENGTH + i].classList.add('close');
             } else {
 
