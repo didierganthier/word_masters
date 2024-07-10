@@ -31,7 +31,7 @@ async function init() {
         }
 
         if(currentGuess === word) {
-            console.log('You win');
+            alert('You win');
             return;
         }
 
