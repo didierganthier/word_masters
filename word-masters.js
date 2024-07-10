@@ -6,6 +6,7 @@ const ROUNDS = 6;
 async function init() {
     let currentGuess = '';
     let currentRow = 0;
+    let isLoading = true;
 
 
     const res = await fetch('https://words.dev-apis.com/word-of-the-day');
@@ -14,6 +15,7 @@ async function init() {
     const wordParts = word.split('');
     let done = false;
     setLoading(false)
+    isLoading = false;
 
 
     function addLetter(letter) {
@@ -28,12 +30,6 @@ async function init() {
 
     async function commit() {
         if(currentGuess.length !== ANSWER_LENGTH) {
-            return;
-        }
-
-        if(currentGuess === word) {
-            alert('You win');
-            done = true;
             return;
         }
 
@@ -61,12 +57,18 @@ async function init() {
         }
 
         currentRow++;
-        currentGuess = '';
 
-        if(currentRow === ROUNDS) {
+        
+        if(currentGuess.toUpperCase() === word) {
+            alert('You win');
+            done = true;
+            return;
+        } else if(currentRow === ROUNDS) {
             alert(`You lose. The word was ${word}`);
             done = true;
         }
+
+        currentGuess = '';
     }
 
     function backspace() {
@@ -79,6 +81,11 @@ async function init() {
     }
 
     document.addEventListener('keydown', async (e) => {
+
+        if(done || isLoading) {
+            return;
+        }
+
         const action = e.key.toLowerCase();
         
 
