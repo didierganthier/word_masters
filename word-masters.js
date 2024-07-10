@@ -1,6 +1,7 @@
 const letters = document.querySelectorAll('.scoreboard-letter');
 const loadingDiv = document.querySelector('.info-bar');
 const ANSWER_LENGTH = 5;
+const ROUNDS = 6;
 
 async function init() {
     let currentGuess = '';
@@ -11,7 +12,7 @@ async function init() {
     const resObj = await res.json();
     const word = resObj.word.toUpperCase();
     const wordParts = word.split('');
-    console.log(word);
+    let done = false;
     setLoading(false)
 
 
@@ -32,11 +33,13 @@ async function init() {
 
         if(currentGuess === word) {
             alert('You win');
+            done = true;
             return;
         }
 
         const guessParts = currentGuess.split('');
-        const map = makeMap(guessParts);
+        const map = makeMap(wordParts);
+        console.log(map);
 
         for(let i = 0; i < ANSWER_LENGTH; i++) {
             if(guessParts[i].toUpperCase() === wordParts[i]) {
@@ -59,6 +62,11 @@ async function init() {
 
         currentRow++;
         currentGuess = '';
+
+        if(currentRow === ROUNDS) {
+            alert(`You lose. The word was ${word}`);
+            done = true;
+        }
     }
 
     function backspace() {
@@ -104,6 +112,8 @@ function makeMap(array) {
             obj[letter] = 1;
         }
     }
+
+    return obj;
 }
 
 init();
