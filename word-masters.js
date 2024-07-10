@@ -30,6 +30,11 @@ async function init() {
             return;
         }
 
+        if(currentGuess === word) {
+            console.log('You win');
+            return;
+        }
+
         const guessParts = currentGuess.split('');
         const map = makeMap(guessParts);
 
